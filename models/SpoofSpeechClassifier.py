@@ -206,7 +206,7 @@ class SpoofSpeechClassifier(sb.Brain):
             asv_data = np.genfromtxt(asv_score_file, dtype=str)
             asv_sources = asv_data[:, 0]
             asv_keys = asv_data[:, 1]
-            asv_scores = asv_data[:, 2].astype(np.float)
+            asv_scores = asv_data[:, 2].astype(np.float64)
 
             # Extract target, nontarget, and spoof scores from the ASV scores
             tar_asv = asv_scores[asv_keys == 'target']
@@ -240,7 +240,7 @@ class SpoofSpeechClassifier(sb.Brain):
 
         def split_target_non_target():
             pred_file = 'predictions/scores.txt'
-            gt_file = 'processed_data/la_cm_dev.json'
+            gt_file = 'processed_data/trial_dev_annotation.json'
             with open(gt_file, 'r') as f:
                 gt = json.load(f)
 
@@ -410,7 +410,7 @@ class SpoofSpeechClassifier(sb.Brain):
             asv_data = np.genfromtxt(asv_score_file, dtype=str)
             asv_sources = asv_data[:, 0]
             asv_keys = asv_data[:, 1]
-            asv_scores = asv_data[:, 2].astype(np.float)
+            asv_scores = asv_data[:, 2].astype(np.float64)
 
             # Extract target, nontarget, and spoof scores from the ASV scores
             tar_asv = asv_scores[asv_keys == 'target']
@@ -444,7 +444,7 @@ class SpoofSpeechClassifier(sb.Brain):
 
         def split_target_non_target():
             pred_file = 'predictions/scores.txt'
-            gt_file = 'processed_data/la_cm_dev.json'
+            gt_file = 'processed_data/cm_dev.json'
             with open(gt_file, 'r') as f:
                 gt = json.load(f)
 

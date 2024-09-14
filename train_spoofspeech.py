@@ -20,6 +20,9 @@ if __name__ == "__main__":
 
         # Load hyperparameters file with command-line overrides.
         with open(hparams_file) as fin:
+            print("hparams_file: ", hparams_file)
+            print("fin: ", fin)
+            print("overrides: ", overrides)
             hparams = load_hyperpyyaml(fin, overrides)
 
         # Create experiment directory

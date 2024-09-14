@@ -1,6 +1,9 @@
 import speechbrain as sb
 import os
 
+SAMPLERATE = 16000
+MAX_DURATION = 30
+
 def get_dataset(hparams):
     """This function prepares the datasets to be used in the brain class.
     It also defines the data processing pipeline through user-defined functions.
@@ -30,7 +33,7 @@ def get_dataset(hparams):
         """Load the signal, and pass it and its length to the corruption class.
         This is done on the CPU in the `collate_fn`."""
 
-        sig = sb.dataio.dataio.read_audio(file_path)
+        sig = sb.dataio.dataio.read_audio({"file":file_path, "start":0, "stop":SAMPLERATE*MAX_DURATION})
         return sig
 
     # Define label pipeline:

@@ -139,3 +139,5 @@ __pycache__
 .idea/
 wandb/
 *.zip
+
+processed_data/*

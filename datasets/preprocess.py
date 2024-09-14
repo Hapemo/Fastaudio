@@ -44,7 +44,7 @@ def get_dataset_annotation(split_features,
                            feature_name = 'cm',
                            data_dir = '../data',
                            file_name = 'ASVspoof2019',
-                           data_type = 'PA',
+                           data_type = 'LA',
                            voice_dir = 'flac',
                            save_dir = 'processed_data/',
                            ):
@@ -58,6 +58,7 @@ def get_dataset_annotation(split_features,
                                                    split=split)
         path = os.path.join(os.path.join(os.path.join(data_dir, subfolder), voice_dir), '*.flac')
         flac_files = glob.glob(path,  recursive=True)
+        print("Path: ", path)
         create_json(split, flac_files, features, save_dir, feature_name)
 
     # merge train and dev
@@ -75,11 +76,17 @@ def get_dataset_annotation(split_features,
 def create_json(split, files, features, save_dir, feature_name):
     annotations = {}
     n_miss = 0
+    # print(f"features: {features}")
+    
     for file in files:
         signal = read_audio(file)
         duration = signal.shape[0] / SAMPLERATE
 
         id = Path(file).stem
+        # print(f"signal: {signal}")
+        # print(f"duration: {duration}")
+        # print(f"id: {id}")
+
         #TODO: SOME id not is features
         if id in features:
             annotations[id] = {
@@ -128,25 +135,37 @@ def create_non_label_eval_json(pro_file = '../data/LA/ASVspoof2019_LA_cm_protoco
                                data_dir = '../data/LA/ASVspoof2021_DF_eval/flac/',
                                output_file = './processed_data/df_cm_eval_2021.json'
                                ):
+    print("create_non_label_eval_json start")
     import json
     from speechbrain.dataio.dataio import read_audio
 
     with open(pro_file, 'r') as f:
         data = f.readlines()
+    print("opened text file")
 
     j = {}
+    counter = 0
     for p in data:
+        counter += 1
+        if counter % 1000 == 0:
+            print(f"data processed: {counter}")
         p = p.replace('\n', '')
         j[p] = {}
         j[p]['file_path'] = '%s%s.flac'%(data_dir, p)
         # Just for format
         j[p]['key'] = 'spoof'
-
+    
+    counter = 0
     for k in j:
+        counter += 1
+        if counter % 1000 == 0:
+            print(f"data processed 2: {counter}")
         signal = read_audio(j[k]['file_path'])
         duration = signal.shape[0] / 16000
         j[k]['duration'] = duration
 
+    print("dumping to json")
     with open(output_file, 'w') as f:
         json.dump(j, f)
+    print("create_non_label_eval_json end")
 

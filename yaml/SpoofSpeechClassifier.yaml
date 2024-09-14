@@ -1,16 +1,16 @@
 ﻿seed: 1986
-__set_seed: !!python/object/apply:torch.manual_seed [!ref <seed>]
+__set_seed: !!python/object/apply:torch.manual_seed [!ref 1986]
 
 data_folder: ./processed_data
-output_folder: !ref ./results/la_fastaudiogauss/<seed>
+output_folder: !ref ./results/la_fastaudiogauss/1986
 save_folder: !ref <output_folder>/save
 train_log: !ref <output_folder>/train_log.txt
 
 # Path where data manifest files will be stored
 # The data manifest files are created by the data preparation script.
-train_annotation: !ref <data_folder>/la_cm_merge.json
-dev_annotation: !ref <data_folder>/la_cm_dev.json
-eval_annotation: !ref <data_folder>/la_cm_eval_2021.json
+train_annotation: !ref <data_folder>/trial_train_annotation.json
+dev_annotation: !ref <data_folder>/trial_dev_annotation.json
+eval_annotation: !ref <data_folder>/trial_eval_annotation.json
 
 
 # The train logger writes training statistics to a file, as well as stdout.
